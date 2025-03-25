@@ -21,13 +21,14 @@ public class Main {
         rectangulo2.imprimirEsquinas();
 
         //verificamos la relación entre los rectángulos
-        System.out.println("\nResultados:");
+        System.out.println("\n📊 Resultados:");
         if (Verificador.seSobreponen(rectangulo1, rectangulo2)) {
-            System.out.println("Los rectángulos se sobreponen.");
+            System.out.println("✅ Los rectángulos se sobreponen.");
         } else if (Verificador.estanJuntos(rectangulo1, rectangulo2)) {
-            System.out.println("Los rectángulos están juntos pero no se sobreponen.");
+            System.out.println("🔄 Los rectángulos están juntos pero no se sobreponen.");
         } else {
-            System.out.println("Los rectángulos son disjuntos (no se tocan ni se sobreponen).");
+            double distancia = Verificador.distanciaEntre(rectangulo1, rectangulo2);
+            System.out.println("❌ Los rectángulos son disjuntos y están separados por una distancia de: " + distancia);
         }
 
         scanner.close();
@@ -51,7 +52,10 @@ public class Main {
             String entrada = scanner.nextLine().trim();
 
             //validamos que el formato sea correcto antes de procesarlo
-            if (entrada.matches("\\d+\\.\\d+")) {
+            /*Numeros enteros positivos
+            if (entrada.matches("\\d+\\.\\d+")){} 
+            */
+            if (entrada.matches("-?\\d+\\.-?\\d+")){
                 String[] partes = entrada.split("\\.");
                 coordenadas[0] = Integer.parseInt(partes[0]);
                 coordenadas[1] = Integer.parseInt(partes[1]);
