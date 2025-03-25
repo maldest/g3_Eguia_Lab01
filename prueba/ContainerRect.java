@@ -17,7 +17,7 @@ public class ContainerRect {
 
     public boolean addRectangulo(Rectangulo r) {
         if (numRec >= capacidad) {
-            System.out.println("❌ No se pueden agregar más rectángulos.");
+            System.out.println("No se pueden agregar más rectángulos.");
             return false;
         }
 
@@ -29,8 +29,8 @@ public class ContainerRect {
     }
 
     private double calcularDistancia(Rectangulo r) {
-        int[] esquina1 = r.getEsquina1();
-        int[] esquina2 = r.getEsquina2();
+        double[] esquina1 = r.getEsquina1();
+        double[] esquina2 = r.getEsquina2();
         return Math.sqrt(Math.pow(esquina2[0] - esquina1[0], 2) + Math.pow(esquina2[1] - esquina1[1], 2));
     }
 

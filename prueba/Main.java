@@ -4,51 +4,40 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-        System.out.println("Ingrese la cantidad máxima de rectángulos a almacenar:");
-        int capacidad = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
+        System.out.println("Rectángulo 1:");
+        Rectangulo rect1 = crearRectangulo(scanner);
 
-        ContainerRect contenedor = new ContainerRect(capacidad);
+        System.out.println("Rectángulo 2:");
+        Rectangulo rect2 = crearRectangulo(scanner);
 
-        for (int i = 0; i < capacidad; i++) {
-            System.out.println("\n🔷 Rectángulo " + (i + 1) + ":");
-            Rectangulo rect = obtenerRectangulo(scanner);
-            contenedor.addRectangulo(rect);
-        }
+        double distancia = Verificador.distanciaEntre(rect1, rect2);
+        String relacion = Verificador.seSobreponen(rect1, rect2) ? "Se sobreponen" : 
+                          Verificador.estanJuntos(rect1, rect2) ? "Están juntos" : "Son disjuntos";
 
-        System.out.println("\n📊 Resultados:");
-        System.out.println(contenedor);
+        System.out.println("\nResultados:");
+        System.out.printf("%-10s %-25s %-10s %-10s %-15s%n", "Rectángulo", "Coordenadas", "Distancia", "Área", "Relación");
+        System.out.printf("%-10d %-25s %-10.3f %-10.2f %-15s%n", 1, rect1, distancia, rect1.calcularArea(), relacion);
+        System.out.printf("%-10d %-25s %-10.3f %-10.2f %-15s%n", 2, rect2, distancia, rect2.calcularArea(), ""); 
 
         scanner.close();
     }
 
-    public static Rectangulo obtenerRectangulo(Scanner scanner) {
-        int[] esquina1 = leerEsquina(scanner, "Ingrese la primera esquina en formato x.y (ejemplo: -3.7):");
-        int[] esquina2 = leerEsquina(scanner, "Ingrese la esquina opuesta en formato x.y (ejemplo: 7.-3):");
-
-        return new Rectangulo(esquina1, esquina2);
-    }
-
-    public static int[] leerEsquina(Scanner scanner, String mensaje) {
-        int[] coordenadas = new int[2];
-        boolean valido = false;
-
-        while (!valido) {
-            System.out.println(mensaje);
-            String entrada = scanner.nextLine().trim();
-
-            if (entrada.matches("-?\\d+\\.-?\\d+")) {
-                String[] partes = entrada.split("\\.");
-                coordenadas[0] = Integer.parseInt(partes[0]);
-                coordenadas[1] = Integer.parseInt(partes[1]);
-                valido = true;
-            } else {
-                System.out.println("❌ Formato incorrecto. Debe ser dos números enteros separados por un punto (ejemplo: -3.7).");
-            }
+        private static Rectangulo crearRectangulo(Scanner scanner) {
+            System.out.println("Ingrese la primera esquina en formato x.y (ejemplo: -3.7,1.2):");
+            String[] input1 = scanner.nextLine().trim().split(",");
+            double x1 = Double.parseDouble(input1[0]);
+            double y1 = Double.parseDouble(input1[1]);
+        
+            System.out.println("Ingrese la esquina opuesta en formato x.y (ejemplo: 7.5,-3.2):");
+            String[] input2 = scanner.nextLine().trim().split(",");
+            double x2 = Double.parseDouble(input2[0]);
+            double y2 = Double.parseDouble(input2[1]);
+        
+            return new Rectangulo(x1, y1, x2, y2);
         }
+    
 
-        return coordenadas;
     }
-}
+
