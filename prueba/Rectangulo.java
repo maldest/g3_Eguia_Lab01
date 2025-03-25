@@ -37,7 +37,15 @@ public class Rectangulo {
 
     @Override
     public String toString() {
-        return String.format("([%.1f, %.1f], [%.1f, %.1f])", 
-                getEsquina1()[0], getEsquina1()[1], getEsquina2()[0], getEsquina2()[1]);
+        return String.format("([%s, %s], [%s, %s], [%s, %s], [%s, %s])",
+                formatNumber(esquinas[0][0]), formatNumber(esquinas[0][1]),
+                formatNumber(esquinas[1][0]), formatNumber(esquinas[1][1]),
+                formatNumber(esquinas[2][0]), formatNumber(esquinas[2][1]),
+                formatNumber(esquinas[3][0]), formatNumber(esquinas[3][1]));
     }
+    
+    private String formatNumber(double num) {
+        return (num % 1 == 0) ? String.format("%.0f", num) : String.format("%.1f", num);
+    }
+    
 }
