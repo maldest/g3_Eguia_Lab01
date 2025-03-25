@@ -8,22 +8,15 @@ public class Principal {
         Scanner sc = new Scanner(System.in);
 
         // PEDIR DATOS DEL PRIMER RECTÁNGULO
-        System.out.println("Ingrese las coordenadas del primer rectángulo:");
-        System.out.println("Ejemplo de como debes poner: 7.5 8.6");
-        System.out.print("Ingrese una esquina 1 del 1er rectángulo (x y): ");
+        System.out.println("Ingrese dos esquinas opuestas del 1er rectángulo (x1 y1 x2 y2): ");
         double x1 = sc.nextDouble(), y1 = sc.nextDouble();
-        System.out.print("Ingrese la esquina 2 opuesta del 1er rectángulo (x y): ");
         double x2 = sc.nextDouble(), y2 = sc.nextDouble();
-
         Rectangulo rectA = crearRectangulo(x1, y1, x2, y2);
 
-        //  PEDIR DATOS DEL SEGUNDO RECTÁNGULO
-        System.out.println("Ingrese las coordenadas del segundo rectángulo:");
-        System.out.print("Ingrese una esquina 1 del 2do rectángulo (x y): ");
+        // PEDIR DATOS DEL SEGUNDO RECTÁNGULO
+        System.out.println("Ingrese dos esquinas opuestas del 2do rectángulo (x3 y3 x4 y4): ");
         double x3 = sc.nextDouble(), y3 = sc.nextDouble();
-        System.out.print("Ingrese una esquina 2 del 2do rectángulo (x y): ");
         double x4 = sc.nextDouble(), y4 = sc.nextDouble();
-
         Rectangulo rectB = crearRectangulo(x3, y3, x4, y4);
 
         // MOSTRAR INFORMACIÓN DE LOS RECTÁNGULOS
@@ -33,7 +26,6 @@ public class Principal {
         // VERIFICAR RELACIÓN ENTRE LOS RECTÁNGULOS
         if (Verificador.seSobreponen(rectA, rectB)) {
             System.out.println("Los rectángulos A y B se sobreponen.");
-
             Rectangulo interseccion = rectanguloSobre(rectA, rectB);
             if (interseccion != null) {
                 System.out.println("Área de sobreposición = " + interseccion.calculoArea());
