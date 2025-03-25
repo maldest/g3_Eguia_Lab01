@@ -29,4 +29,40 @@ public class Verificador {
     public static boolean sonDisjuntos(Rectangulo a, Rectangulo b) {
         return !seSobreponen(a, b) && !estanJuntos(a, b);
     }
+
+     //calcula la distancia mínima entre dos rectángulos si son disjuntos
+     public static double distanciaEntre(Rectangulo a, Rectangulo b) {
+        if (!sonDisjuntos(a, b)) {
+            return 0; //si no son disjuntos, la distancia es 0
+        }
+
+        int[] a1 = a.getEsquina1(), a2 = a.getEsquina2();
+        int[] b1 = b.getEsquina1(), b2 = b.getEsquina2();
+
+        int dx = 0, dy = 0;
+
+        //si hay separación en X
+        if (a2[0] < b1[0]) { 
+            dx = b1[0] - a2[0]; 
+        } else if (b2[0] < a1[0]) { 
+            dx = a1[0] - b2[0]; 
+        }
+
+        //si hay separación en Y
+        if (a2[1] < b1[1]) { 
+            dy = b1[1] - a2[1]; 
+        } else if (b2[1] < a1[1]) { 
+            dy = a1[1] - b2[1]; 
+        }
+
+        //si hay separación en X e Y, usamos distancia euclidiana
+        if (dx > 0 && dy > 0) {
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+        
+        //si solo hay separación en un eje, devolvemos la distancia en ese eje
+        return Math.max(dx, dy);
+    }
+
+
 }
