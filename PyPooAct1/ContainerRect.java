@@ -1,47 +1,46 @@
-package prueba;
+package PyPooEje1;
+
 
 public class ContainerRect {
-    private Rectangulo[] rectangulos;
-    private double[] distancias;
-    private double[] areas;
-    private int capacidad;
-    private int numRec;
+    private Rectangulo[] rectangulos;  // Almacenamos los rectángulos
+    private double[] distancias;       // Almacenamos las distancias euclidianas
+    private double[] areas;            // Almacenamos las áreas
+    private int n;                      // Capacidad máxima del contenedor
+    private static int numRec = 0;      // Cantidad de rectángulos almacenados
 
+    // Constructor-> recibe la cantidad máxima de rectángulos
     public ContainerRect(int capacidad) {
-        this.capacidad = capacidad;
-        this.numRec = 0;
-        this.rectangulos = new Rectangulo[capacidad];
-        this.distancias = new double[capacidad];
-        this.areas = new double[capacidad];
+        this.n = capacidad;
+        this.rectangulos = new Rectangulo[n];
+        this.distancias = new double[n];
+        this.areas = new double[n];
     }
 
-    public boolean addRectangulo(Rectangulo r) {
-        if (numRec >= capacidad) {
-            System.out.println("No se pueden agregar más rectángulos.");
-            return false;
+    // Método para agregar un rectángulo al contenedor
+    public void addRectangulo(Rectangulo r) {
+        if (numRec < n) {
+            rectangulos[numRec] = r;
+            distancias[numRec] = calcularDistancia(r);
+            areas[numRec] = r.calculoArea();
+            numRec++;
+        } else {
+            System.out.println("¡ No se puede agregar más rectángulos. Capacidad máxima alcanzada >:c !");
         }
-
-        rectangulos[numRec] = r;
-        distancias[numRec] = calcularDistancia(r);
-        areas[numRec] = r.calcularArea();
-        numRec++;
-        return true;
     }
 
+    // Método para calcular la distancia EUCLIDIANA de un rectángulo
     private double calcularDistancia(Rectangulo r) {
-        double[] esquina1 = r.getEsquina1();
-        double[] esquina2 = r.getEsquina2();
-        return Math.sqrt(Math.pow(esquina2[0] - esquina1[0], 2) + Math.pow(esquina2[1] - esquina1[1], 2));
+        double dx = r.getEsquina1().getX() - r.getEsquina2().getX();
+        double dy = r.getEsquina1().getY() - r.getEsquina2().getY();
+        return Math.sqrt(dx * dx + dy * dy);
     }
 
-    @Override
+    // Método para mostrar los rectángulos almacenados
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Lista de Rectángulos:\n");
-        sb.append("Rectángulo  Coordenadas             Distancia   Área\n");
+        sb.append("Rectángulo\tCoordenadas\t\tDistancia\tÁrea\n");
         for (int i = 0; i < numRec; i++) {
-            sb.append(String.format("%-10d %-25s %-10.3f %-10.2f\n",
-                    (i + 1), rectangulos[i].toString(), distancias[i], areas[i]));
+            sb.append((i + 1) + "\t" + rectangulos[i] + "\t" + String.format("%.3f", distancias[i]) + "\t" + String.format("%.2f", areas[i]) + "\n");
         }
         return sb.toString();
     }
