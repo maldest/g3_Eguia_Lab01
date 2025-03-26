@@ -1,26 +1,43 @@
-package PyPooAct1;
+package prueba;
 
-public class Verificador {
-
-    // Verifica si dos rectángulos se sobreponen
+class Verificador {
     public static boolean seSobreponen(Rectangulo a, Rectangulo b) {
-        return !(a.getEsquina2().getX() <= b.getEsquina1().getX() ||
-                 a.getEsquina1().getX() >= b.getEsquina2().getX() ||
-                 a.getEsquina2().getY() <= b.getEsquina1().getY() ||
-                 a.getEsquina1().getY() >= b.getEsquina2().getY());
+        double[] a1 = a.getEsquina1(), a2 = a.getEsquina2();
+        double[] b1 = b.getEsquina1(), b2 = b.getEsquina2();
+
+        return !(a2[0] <= b1[0] || a1[0] >= b2[0] || a2[1] <= b1[1] || a1[1] >= b2[1]);
     }
 
-    // Verifica si dos rectángulos están juntos
     public static boolean estanJuntos(Rectangulo a, Rectangulo b) {
+        double[] a1 = a.getEsquina1(), a2 = a.getEsquina2();
+        double[] b1 = b.getEsquina1(), b2 = b.getEsquina2();
+
         return !seSobreponen(a, b) &&
-               (a.getEsquina2().getX() == b.getEsquina1().getX() ||
-                a.getEsquina1().getX() == b.getEsquina2().getX() ||
-                a.getEsquina2().getY() == b.getEsquina1().getY() ||
-                a.getEsquina1().getY() == b.getEsquina2().getY());
+               (a2[0] == b1[0] || a1[0] == b2[0] || a2[1] == b1[1] || a1[1] == b2[1]);
     }
 
-    // Verifica si dos rectángulos son disjuntos
-    public static boolean sonDisjuntos(Rectangulo a, Rectangulo b) {
-        return !seSobreponen(a, b) && !estanJuntos(a, b);
+    public static double distanciaEntre(Rectangulo a, Rectangulo b) {
+        if (seSobreponen(a, b) || estanJuntos(a, b)) {
+            return 0;
+        }
+
+        double[] a1 = a.getEsquina1(), a2 = a.getEsquina2();
+        double[] b1 = b.getEsquina1(), b2 = b.getEsquina2();
+
+        double dx = 0, dy = 0;
+
+        if (a2[0] < b1[0]) { 
+            dx = b1[0] - a2[0]; 
+        } else if (b2[0] < a1[0]) { 
+            dx = a1[0] - b2[0]; 
+        }
+
+        if (a2[1] < b1[1]) { 
+            dy = b1[1] - a2[1]; 
+        } else if (b2[1] < a1[1]) { 
+            dy = a1[1] - b2[1]; 
+        }
+
+        return Math.sqrt(dx * dx + dy * dy);
     }
 }
